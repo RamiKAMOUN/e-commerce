@@ -27,30 +27,28 @@ return <React.Fragment>
 <div
 style={{"display":"flex","flexWrap":"wrap","justifyContent":"left"}}>
 {scategories.map((scat,ind)=>{
-return <Card sx={{ maxWidth: 'auto',margin: 1 }} key={ind}>
+return <Card sx={{ maxWidth: 'auto',margin: 0.5}} key={ind}>
 <CardMedia
 component="img"
 alt="image"
-height="160"
+height="200"
+width="100"
 image={scat.imagescat}
 />
 <CardContent>
+
 <Typography gutterBottom variant="h6" component="div">
-{scat.nomscategorie}
+ {scat.nomscategorie}
 </Typography>
-<Typography variant="body2" color="text.secondary">
-Prix : {scat.prix} DT
-</Typography>
+
 </CardContent>
+
 <CardActions>
-<Button disabled={scat.qtestock<=1}
-variant="contained" color="secondary" size="large"
->
-      {scat.qtestock<=1? "OUT OF SOLD": "Add to cart"}
-      </Button>
-      </CardActions>
-      </Card>
-      })}
+<Button >  add    </Button>
+</CardActions>
+
+</Card>
+})}
 
 </div>
 }

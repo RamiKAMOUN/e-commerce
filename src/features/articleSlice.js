@@ -1,19 +1,18 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
-import {fetchArticles,addArticle,deleteArticles,editArticle, fetchAticleById} from
-"../services/ArticleService"
+import {fetchArticles,addArticle,deleteArticles,editArticle, fetchAticleById} from "../services/ArticleService"
 
 export const getArticles = createAsyncThunk(
-"article/getArticles",
-async (_, thunkAPI) => {
-const { rejectWithValue } = thunkAPI;
-try {
-const res = await fetchArticles();
-return res.data;
-}
-catch (error) {
-return rejectWithValue(error.message);
-}
-}
+  "article/getArticles",
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+    const res = await fetchArticles();
+    return res.data;
+    }
+    catch (error) {
+    return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const createArticle = createAsyncThunk(
@@ -21,37 +20,38 @@ export const createArticle = createAsyncThunk(
   async (article, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
   try{
-  const res= await addArticle(article);
-  return res.data
+    const res= await addArticle(article);
+    return res.data;
   }
   catch (error) {
-  return rejectWithValue(error.message);
+    return rejectWithValue(error.message);
   }
   }
-  );
-  export const delArticle = createAsyncThunk(
+);
+export const delArticle = createAsyncThunk(
   "article/deleteArticles",
-async (id,thunkAPI) => {
-const { rejectWithValue } = thunkAPI;
-try{
-await deleteArticles(id);
-return id ;
-}
-catch (error) {
-return rejectWithValue(error.message);
-}
+  async (id,thunkAPI) => {
+  const { rejectWithValue } = thunkAPI;
+  try{
+    await deleteArticles(id);
+    return id ;
+  }
+  catch (error) {
+    return rejectWithValue(error.message);
+  }
 });
+
 export const updateArticle = createAsyncThunk(
-"article/updateArticle",
-async (article, thunkAPI) => {
-const { rejectWithValue } = thunkAPI;
-try{
-const res= await editArticle(article);
-return res.data
-}
-catch (error) {
-return rejectWithValue(error.message);
-}
+  "article/updateArticle",
+  async (article, thunkAPI) => {
+  const { rejectWithValue } = thunkAPI;
+  try{
+    const res= await editArticle(article);
+    return res.data
+  }
+  catch (error) {
+    return rejectWithValue(error.message);
+  }
 })
 
 export const findArticleByID = createAsyncThunk(
@@ -70,11 +70,11 @@ export const findArticleByID = createAsyncThunk(
 export const articleSlice = createSlice({
   name: 'article',
   initialState:{
-  articles:[],
-  article:{},
-  isLoading: false,
-  success:null,
-  error:null,
+    articles:[],
+    article:{},
+    isLoading: false,
+    success:null,
+    error:null,
   },
   extraReducers: (builder) => {
     //get articles
@@ -102,20 +102,20 @@ export const articleSlice = createSlice({
       state.error=null;
       state.success=null;
     })
-      .addCase(createArticle.fulfilled, (state, action) => {
-      state.articles.push(action.payload);
+    .addCase(createArticle.fulfilled, (state, action) => {
+      state.articles=[ action.payload,...state.articles];
       state.isLoading=false;
       state.error=null;
       state.success=action.payload;
-      })
-      .addCase(createArticle.rejected, (state, action) => {
+    })
+    .addCase(createArticle.rejected, (state, action) => {
       state.isLoading=false;
       state.error=action.payload;
       state.success=null;
-      })
+    })
 
     //Modification article
-    .addCase(updateArticle.pending, (state, action) => {
+     .addCase(updateArticle.pending, (state, action) => {
       state.isLoading=true;
       state.error=null;
       state.success=null;
@@ -161,5 +161,5 @@ export const articleSlice = createSlice({
     }
     }
     )
-
+    
     export default articleSlice.reducer;

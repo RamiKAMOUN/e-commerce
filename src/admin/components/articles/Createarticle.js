@@ -14,6 +14,7 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import { ToastContainer } from 'react-toastify';
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
@@ -41,7 +42,7 @@ const Createarticle = () => {
 
     const [imageart, setImageart] = useState("");
 
-    const [scategorieID, setScategorieID] = useState("");
+    const [scategorieID, setScategorieID] = useState(""); 
 
     const dispatch = useDispatch();
 
@@ -75,6 +76,15 @@ const Createarticle = () => {
       setValidated(false);
       setFile("")
       handleClose()
+      toast("Article ajouté", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        })
       })
       .catch(error=>{
       console.log(error)
@@ -155,62 +165,69 @@ const Createarticle = () => {
                 <Form.Label >Référence *</Form.Label>
 
                   <Form.Control
-                  required
-                  type="text"
-                  placeholder="Référence"
-                  value={reference}
-                  onChange={(e)=>setReference(e.target.value)}
+                    required
+                    type="text"
+                    placeholder="Référence"
+                    value={reference}
+                    onChange={(e)=>setReference(e.target.value)}
                   />
 
                   <Form.Control.Feedback type="invalid">
-                  Saisir Référence Article
+                    Saisir Référence Article
                   </Form.Control.Feedback>
 
               </Form.Group>
 
 
-                  <Form.Group as={Col} md="6">                    
+                <Form.Group as={Col} md="6">                    
                   <Form.Label>Désignation *</Form.Label>
-                  <Form.Control
-                  required
-                  type="text"
-                  placeholder="Désignation"
-                  value={designation}
-                  onChange={(e)=>setDesignation(e.target.value)}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                  Saisir Désignation
-                  </Form.Control.Feedback>
-                  </Form.Group>
+                    <Form.Control
+                    required
+                    type="text"
+                    placeholder="Désignation"
+                    value={designation}
+                    onChange={(e)=>setDesignation(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                     Saisir Désignation
+                    </Form.Control.Feedback>
+                </Form.Group>
             </Row>
 
 
-                  <Row className="mb-2">
-                  <Form.Group className="col-md-6">
-                  <Form.Label>Marque *</Form.Label>
+            <Row className="mb-2">
+
+              <Form.Group className="col-md-6">
+                    <Form.Label>Marque *</Form.Label>
                   <InputGroup hasValidation>
-                  <Form.Control
-                  type="text"
-                  required
-                  placeholder="Marque"
-                  value={marque}
-                  onChange={(e)=>setMarque(e.target.value)}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                  Marque Incorrecte
-                  </Form.Control.Feedback>
+
+                    <Form.Control
+                      type="text"
+                      required
+                      placeholder="Marque"
+                      value={marque}
+                      onChange={(e)=>setMarque(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Marque Incorrecte
+                    </Form.Control.Feedback>
+
                   </InputGroup>
-                  </Form.Group>
-                  <Form.Group as={Col} md="6">
-                  <Form.Label>Prix</Form.Label>
-                  <Form.Control
-                  type="number"
-                  placeholder="Prix"
-                  value={prix}
-                  onChange={(e)=>setPrix(e.target.value)}
-                  />
-                  </Form.Group>
-                  </Row>
+
+                </Form.Group>
+
+              <Form.Group as={Col} md="6">
+
+                <Form.Label>Prix</Form.Label>
+
+                <Form.Control
+                type="number"
+                placeholder="Prix"
+                value={prix}
+                onChange={(e)=>setPrix(e.target.value)}
+                />
+              </Form.Group>
+            </Row>
                   <Row className="mb-3">
                   <Form.Group className="col-md-6 ">
                   <Form.Label>
@@ -260,7 +277,7 @@ const Createarticle = () => {
       <Button variant="secondary" onClick={handleClose}>
       Fermer
       </Button>
-      <Button type="submit">Enregistrer</Button>
+      <Button type="submit" onClick={handleSubmit}>Enregistrer</Button>
       </Modal.Footer>
     </Form>
   </Modal>
